@@ -26,4 +26,9 @@ On the server, in the home directory of the user 'foss4g', a subdirectory named 
 
 * Create a file /home/foss4g/www/wsXX/index.html with a simple text content ("Hello !") and check that it is displayed correctly when you go with your browser to http://3d.oslandia.com/foss4g/wsXX/
 
-* TODO explain how to copy the example
+* In order to make your own 3D scene, we will start with the example that is shown on http://3d.oslandia.com by copying the HTML example file
+ 
+`cp -R /home/foss4g/workshop-3d-itowns/www/dist/* /home/foss4g/www/wsXX/`
+
+* Open the index.html file copied that way and look for a variable named **buildingLayerName**. The building server has been configured so that a table **wsXX_montreal** can be used by the name **wsXX**. Set the correct name to this variable so that it can point to your own database table and reload your browser to the page http://3d.oslandia.com/foss4g/wsXX/
+
