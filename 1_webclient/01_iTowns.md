@@ -8,6 +8,11 @@ iTowns2 is a JavaScript framework for the visualization of 3D geospatial data.
 
 We will use it to view terrain, 3D buildings and point clouds.
 
+Building iTowns2
+-----------------
+
+In the itowns folder, run `npm run build`.
+
 Running iTowns2
 -----------------
 
