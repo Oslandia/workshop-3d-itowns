@@ -18,3 +18,13 @@ SELECT num, nom FROM <district table>;
 ```
 
 You should see 34 districts in the table.
+
+## Transforming the data
+
+The district data is in the geographic coordinate system. We will project it in our local srs: epsg:2950.
+
+```
+psql gml
+SELECT AddGeometryColumn('<district table>', 'geom', 2950, 'MULTIPOLYGON', 2);
+UPDATE <district table> SET geom = ST_TRANSFORM(wkb_geometry, 2950);
+```
