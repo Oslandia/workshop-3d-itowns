@@ -241,13 +241,16 @@
         var attributes = [];
         var colorFunction;
 
+	var buildingLayerName = "montreal";
+
         var scene = itowns.viewer.createScenePlane(
             initCenter,
             viewerDiv,
             // pointcloud bouding-box
-            [minx - offset, maxx + offset, miny - offset, maxy + offset],
+        [minx - offset, maxx + offset, miny - offset, maxy + offset],
+	buildingLayerName,
             attributes,
-            colorFunction);
+        colorFunction);
 
         itowns.viewer.addPointCloud("greyhound://3d.oslandia.com/lopocs-itowns/greyhound/");
 
