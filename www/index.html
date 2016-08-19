@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Globe</title>
+
+	<style type="text/css">
+            html {height: 100%}
+	    body { margin: 0; overflow:hidden; height:100%}
+
+            #viewerDiv {
+                margin : auto auto;
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                color: red;
+            }
+            #menuDiv {position: absolute; top:0px; margin-left: 0px;}
+
+        </style>
+        <meta charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5.1/dat.gui.min.js"></script>
+
+
+
+        <!-- Camera controls -->
+        <style type="text/css">
+            #infoBox {
+                width: 240px;
+                position: absolute;
+                bottom: 5px;
+                left: 5px;
+                background-color: #000000;
+                color: #FFFFFF;
+            }
+
+            #controls {
+                width: 120px;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+            }
+
+            #controls div {
+                float: right;
+            }
+            #controls button,
+            #controls .btn {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                background: none;
+                border: 0;
+                text-align: center;
+                font-size: 1.5em;
+                background-size: 100% 100%;
+                cursor: pointer;
+            }
+
+            #controls .inactive {
+                cursor: default;
+            }
+
+            #controls button:focus {
+                outline: none;
+            }
+
+            #controls button {
+                color: #888888;
+            }
+
+            #controls button:hover {
+                color: #44abda;
+            }
+
+            #controls .row {
+
+            }
+
+            #controls img {
+
+            }
+
+            #controls .columns {
+                float: left;
+            }
+
+            #controls .first div:first-child .btn {
+                border-radius: 100% 0 0 0;
+            }
+            #controls .first div:last-child .btn {
+                border-radius: 0 100% 0 0;
+            }
+            #controls .last div:first-child .btn {
+                border-radius: 0 0 0 100%;
+            }
+            #controls .last div:last-child .btn {
+                border-radius: 0 0 100% 0;
+            }
+
+            #controls #rotate {
+               background: url('img/ic_3d_rotation_grey_120.png') center center no-repeat;
+            }
+
+            #controls #pan {
+               background: url('img/ic_move_grey_120.png') center center no-repeat;
+               margin-top: 5px;
+            }
+
+            #controls .move {
+                background: url('img/ic_zoom_bg_40.png') center center no-repeat;
+            }
+            #controls #rotate #lookUp {
+                background-image: url('img/ic_3d_rotation_top.png');
+            }
+            #controls #rotate #lookRight {
+                background-image: url('img/ic_3d_rotation_right.png');
+            }
+            #controls #rotate #lookLeft {
+                background-image: url('img/ic_3d_rotation_left.png');
+            }
+            #controls #rotate #lookDown {
+                background-image: url('img/ic_3d_rotation_bottom.png');
+            }
+
+            #controls #rotate #lookUp:hover {
+                background-image: url('img/ic_3d_rotation_top_hover.png');
+            }
+            #controls #rotate #lookRight:hover {
+                background-image: url('img/ic_3d_rotation_right_hover.png');
+            }
+            #controls #rotate #lookLeft:hover {
+                background-image: url('img/ic_3d_rotation_left_hover.png');
+            }
+            #controls #rotate #lookDown:hover {
+                background-image: url('img/ic_3d_rotation_bottom_hover.png');
+            }
+        </style>
+    </head>
+    <body>
+        <div id="viewerDiv"></div>
+
+        <div id="infoBox"></div>
+
+        <div id="controls">
+
+            <!-- rotate -->
+            <div class="row" id="rotate">
+                <div class="row first">
+                    <div class="small-4 columns">
+                        <div class="btn"></div>
+                    </div>
+                    <div class="small-4 columns" id="lookUp">
+                        <div class="btn"></div>
+                    </div>
+                    <div class="small-4 columns">
+                        <div class="btn"></div>
+                    </div>
+                </div>
+                <div class="row middle">
+                    <div class="small-4 columns" id="lookRight">
+                        <div class="btn"></div>
+                    </div>
+                    <div class="small-4 columns">
+                        <div class="btn inactive"></div>
+                    </div>
+                    <div class="small-4 columns" id="lookLeft">
+                        <div class="btn"></div>
+                    </div>
+                </div>
+                <div class="row last">
+                    <div class="small-4 columns">
+                        <div class="btn"></div>
+                    </div>
+                    <div class="small-4 columns" id="lookDown">
+                        <div class="btn"></div>
+                    </div>
+                    <div class="small-4 columns">
+                        <div class="btn"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- pan -->
+            <div class="row" id="pan">
+                <div class="row first">
+                    <div class="small-4 columns" id="zoomIn">
+                        <button class="btn move">+</button>
+                    </div>
+                    <div class="small-4 columns" id="panUp">
+                        <button>⬆</button>
+                    </div>
+                    <div class="small-4 columns" id="moveUp">
+                        <button class="btn move">↥</button>
+                    </div>
+                </div>
+                <div class="row middle">
+                    <div class="small-4 columns" id="panLeft">
+                        <button>⬅</button>
+                    </div>
+                    <div class="small-4 columns">
+                        <div class="btn inactive"></div>
+                    </div>
+                    <div class="small-4 columns" id="panRight">
+                        <button>➡</button>
+                    </div>
+                </div>
+                <div class="row last">
+                    <div class="small-4 columns" id="zoomOut">
+                        <button class="btn move">-</button>
+                    </div>
+                    <div class="small-4 columns" id="panDown">
+                        <button>⬇</button>
+                    </div>
+                    <div class="small-4 columns" id="moveDown">
+                        <button class="btn move">↧</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="dist/itowns2.js"> </script>
+        <script type="text/javascript">
+
+
+
+        var initCenter = { longitude:2.3465, latitude: 48.88, altitude: 25000000};
+
+        // iTowns namespace defined here
+        var viewerDiv = document.getElementById("viewerDiv");
+
+        var offset = 1000;
+
+        var minx = 298250;
+        var maxx = 302750;
+        var miny = 5039250;
+        var maxy = 5043750;
+
+        var attributes = [];
+        var colorFunction;
+
+        var scene = itowns.viewer.createScenePlane(
+            initCenter,
+            viewerDiv,
+            // pointcloud bouding-box
+            [minx - offset, maxx + offset, miny - offset, maxy + offset],
+            attributes,
+            colorFunction);
+
+        itowns.viewer.addPointCloud("greyhound://3d.oslandia.com/lopocs-itowns/greyhound/");
+
+        itowns.viewer.addElevationLayer({
+            url       : "http://3d.oslandia.com/dem.png",
+            protocol  : 'single_image',
+            id        : 'testsinglpage',
+            name      : 'idem',
+            projection : "EPSG:3946",
+            bbox      : [266040.26, 4984521.41, 343559.74, 5095744.39],
+            updateStrategy: {
+                type: 0
+            },
+            options: {
+                minmaxElevation: [0, 255],
+                mimetype  : "image/png",
+                tileMatrixSet: 'WGS84G'
+            }
+        });
+
+        itowns.viewer.addImageryLayer({
+            url       : "http://3d.oslandia.com/mapserv?map=cmm_2013",
+            protocol  : 'wms',
+            version   : '1.3.0',
+            id        : 'Imagery',
+            name      : 'cmm_2013',
+            style      : "",
+            projection : "EPSG:2950",
+            transparent : true,
+            // min long, min lat, max long, max lat
+            bbox      : [266040.26, 4984521.41, 343559.74, 5095744.39],
+            featureInfoMimeType : "",
+            dateTime  : "",
+            heightMapWidth : 256,
+            waterMask      : false,
+            updateStrategy: {
+                type: 3
+            },
+            options: {
+                mimetype  : "image/jpeg",
+                tileMatrixSet: 'WGS84G'
+            }
+        });
+
+        // itowns.viewer.addImageryLayer({
+        //     url       : "http://3d.oslandia.com/mapserv.jpg",
+        //     protocol  : 'single_image',
+        //     id        : 'single_image_color',
+        //     name      : 'single_image_color',
+        //     projection : "EPSG:3946",
+        //     bbox      : [283000, 5031000, 304000,5052000],
+        //     updateStrategy: {
+        //         type: 0
+        //     },
+        //     options: {
+        //         mimetype  : "image/jpeg",
+        //         tileMatrixSet: 'WGS84G'
+        //     }
+        // });
+
+        itowns.viewer.update();
+
+        // THIS IS AN EXAMPLE OF INTERFACE TO INTERACT WITH ITOWNS
+        var Menu = function() {
+            this.CloudsIR = false;
+            this.SatelliteAnimation = false;
+            this.RealisticLighting = false;
+            this.StreetLevelImagery = false;
+            this.KML = false;
+            this.AnimateTime = false;
+            this.Orbit = false;
+            this.api = function(){};
+            this.api2 = function(){};
+            this.api3 = function(){};
+        };
+
+        var text = new Menu();
+        var gui = new dat.GUI( { autoPlace: false});
+        gui.domElement.id = 'menuDiv';
+        viewerDiv.appendChild(gui.domElement);
+
+        var config = scene.getMap().layersConfiguration;
+
+        var colorGui = gui.addFolder('Color Layers');
+        var colorLayers = scene.getMap().layersConfiguration.getColorLayers();
+        for(var i in colorLayers) {
+            var layer = colorLayers[i];
+
+            var folder = colorGui.addFolder(layer.id);
+            folder.add( { visible: true }, 'visible').onChange(function(value) {
+                itowns.viewer.setLayerVisibility(this, value);
+            }.bind(layer.id));
+            folder.add( { opacity: 1.0 }, 'opacity').min(0.0).max(1.0).onChange(function(value) {
+                itowns.viewer.setLayerOpacity(this, value);
+            }.bind(layer.id));
+            folder.add( { frozen: false }, 'frozen').onChange(function(value) {
+                config.setLayerFreeze(this, value);
+            }.bind(layer.id));
+        }
+
+        var elevationGui = gui.addFolder('Elevation Layers');
+        var elevationLayers = config.getElevationLayers();
+        for(var i in elevationLayers) {
+            var layer = elevationLayers[i];
+
+            var folder = elevationGui.addFolder(layer.id);
+            folder.add( { frozen: false }, 'frozen').onChange(function(value) {
+                config.setLayerFreeze(this, value);
+            }.bind(layer.id));
+        }
+
+        /*
+       gui.add( { z_offset: -6.0 }, 'z_offset').min(-128.0).max(128.0).onChange(function(value) {
+            var cO = function(object) {
+                if (object.material.uniforms && object.material.uniforms.zOffset) {
+                    object.material.uniforms.zOffset.value = value;
+                }
+            };
+
+            // children[0] is rootNode
+            scene.getMap().tiles.children[0].traverse(cO);
+
+            scene.wait(0);
+        }.bind(layer.id));
+        */
+
+        if(false) {
+            var f2 = gui.addFolder('Atmosphere');
+
+            f2.open();
+
+            f2.add(text, 'CloudsIR').onChange(function(newValue) {
+                itowns.viewer.showClouds(newValue);
+            });
+
+            f2.add(text, 'SatelliteAnimation').onChange(function(newValue) {
+                itowns.viewer.showClouds(true, newValue);
+            });
+
+            f2.add(text, 'RealisticLighting').onChange(function(newValue) {
+                itowns.viewer.setRealisticLightingOn(newValue);
+            });
+
+            f2.add(text, 'AnimateTime').onChange(function(newValue) {
+                itowns.viewer.animateTime(newValue);
+            });
+
+            f2.add(text, 'Orbit').onChange(function(newValue) {
+                itowns.viewer.orbit(newValue);
+            });
+
+
+            f2.add(text, 'StreetLevelImagery').onChange(function(newValue) {
+                itowns.viewer.setStreetLevelImageryOn(newValue);
+            });
+        }
+
+        gui.add({b: true}, 'b').name('Buildings Visible').onChange(function(newValue) {
+            itowns.viewer.setBuildingsVisibility(newValue);
+            scene.realtimeSceneProcess();
+            scene.renderScene3D();
+        });
+
+        gui.add({pc: true}, 'pc').name('Point Cloud Visible').onChange(function(newValue) {
+            itowns.viewer.setPointCloudVisibility(newValue);
+            scene.renderScene3D();
+        });
+        var pc = gui.addFolder('Point Cloud Details');
+
+        pc.add({size: 1.0}, 'size').name('Point Size').min(1.0).max(50.0).onChange(function(newValue) {
+            var cO = function(object) {
+                if (object.material && object.material.uniforms && object.material.uniforms.size) {
+                    object.material.uniforms.size.value = newValue;
+                }
+            }
+            scene.layers[0].node.children[1].children[1].traverse(cO);
+            scene.renderScene3D();
+        });
+
+        var names = ['', '', 'Ground', '', '', 'Vegetation', 'Buildings'];
+        for (var i=0; i<names.length; i++) {
+            if (i == 2 || i==5 || i==6) {
+                pc.add({classif: true}, 'classif').name(names[i]).onChange(function(newValue) {
+                    var classif = this.valueOf();
+                    var cO = function(object) {
+                        if (object.material && object.material.uniforms && object.material.uniforms.classificationMask) {
+                            object.material.uniforms.classificationMask.value[classif] = newValue ? 1 : 0;
+                        }
+                    }
+
+                    // children[0] is rootNode
+                    scene.layers[0].node.children[1].children[1].traverse(cO);
+                    scene.renderScene3D();
+                }.bind(i));
+            }
+        }
+
+        viewerDiv.addEventListener('selection', function(e) {
+            var node = e.detail;
+            if(node.properties !== undefined) {
+                var idx = node.getSelectedIndex();
+                var properties = node.properties[idx];
+                var pString = "<table><tr><th>Name</th><th>Value</th></tr>";
+                for(var p in properties) {
+                    console.log(p, properties[p]);
+                    pString += "<tr><td>" + p + "</td><td>" + properties[p] + "</td></tr>";
+                }
+                pString += "</table>"
+                console.log(pString);
+                document.getElementById("infoBox").innerHTML = pString;
+            } else {
+                document.getElementById("infoBox").innerHTML = "";
+            }
+        });
+
+        viewerDiv.addEventListener('rangeChanged', function() {
+            var controller;
+            controller = gui.add(text, 'api');
+            if(controller) {
+                controller.onChange(function(value) {
+                    // removeLayer('OPENSM');
+                    //itowns.viewer.moveLayerUp('OrthoCRS');
+                    //console.log(itowns.viewer.getZoomLevel("Ortho"));
+                });
+            }
+        }, false);
+
+        var removeLayer = function(nameLayer) {
+            if(itowns.viewer.removeImageryLayer(nameLayer)) {
+                var controllerTodelete = [];
+
+                for (var i in gui.__controllers) {
+                    var controller = gui.__controllers[i];
+
+                    if(controller.property === nameLayer || controller.property === nameLayer + '_Opacity') {
+                        controllerTodelete.push(controller);
+                    }
+                }
+
+                for (var i in controllerTodelete) {
+                    gui.remove(controllerTodelete[i]);
+                }
+            }
+        }
+
+        var controller;
+        var layerIdCrs = 'OrthoCRS';
+
+        // var controller = gui.add(text,'api').name('Up');
+
+        // if(controller)
+        // {
+        //     controller.onChange(function(value) {
+        //         itowns.viewer.moveLayerUp(layerIdCrs);
+        //     });
+        // }
+
+        // controller = gui.add(text,'api2').name('down');
+
+        // if(controller)
+        // {
+        //     controller.onChange(function(value) {
+        //         itowns.viewer.moveLayerDown(layerIdCrs);
+        //     });
+        // }
+
+        // controller = gui.add(text,'api3').name('Remove Layer');
+
+        // if(controller)
+        // {
+        //     controller.onChange(function(value) {
+        //         itowns.viewer.removeImageryLayer(layerIdCrs);
+        //     });
+        // }
+
+        viewerDiv.addEventListener('globe-loaded', function() {
+            console.log("Globe Loaded");
+            //itowns.viewer.setRange(100000);
+
+            //itowns.viewer.setCenter({longitude:-74,latitude:40,altitude:0});
+        }, false);
+
+        viewerDiv.addEventListener('Layer-removed', function(event) {
+            console.log("Layer " + event.layer +  " removed");
+        }, false);
+
+        // gui.add(text, 'StreetLevelImagery').onChange(function(newValue) {
+        //     itowns.viewer.setStreetLevelImageryOn(newValue);
+        // });
+
+        // camera control
+        document.getElementById('panUp').addEventListener('click', function(event) {
+            itowns.viewer.panCamera(0, 1);
+            viewerDiv.focus();
+        });
+        document.getElementById('panDown').addEventListener('click', function(event) {
+            itowns.viewer.panCamera(0, -1);
+            viewerDiv.focus();
+        });
+        document.getElementById('panLeft').addEventListener('click', function(event) {
+            itowns.viewer.panCamera(-1, 0);
+            viewerDiv.focus();
+        });
+        document.getElementById('panRight').addEventListener('click', function(event) {
+            itowns.viewer.panCamera(1, 0);
+            viewerDiv.focus();
+        });
+        document.getElementById('moveUp').addEventListener('click', function(event) {
+            itowns.viewer.panCamera(0, 0, 1);
+            viewerDiv.focus();
+        });
+        document.getElementById('moveDown').addEventListener('click', function(event) {
+            itowns.viewer.panCamera(0, 0, -1);
+            viewerDiv.focus();
+        });
+        document.getElementById('zoomIn').addEventListener('click', function(event) {
+            itowns.viewer.panCamera(0, 0, 0, 1);
+            viewerDiv.focus();
+        });
+        document.getElementById('zoomOut').addEventListener('click', function(event) {
+            itowns.viewer.panCamera(0, 0, 0, -1);
+            viewerDiv.focus();
+        });
+
+
+        document.getElementById('lookUp').addEventListener('click', function(event) {
+            itowns.viewer.rotateCamera(0, 1);
+            viewerDiv.focus();
+        });
+        document.getElementById('lookDown').addEventListener('click', function(event) {
+            itowns.viewer.rotateCamera(0, -1);
+            viewerDiv.focus();
+        });
+        document.getElementById('lookLeft').addEventListener('click', function(event) {
+            itowns.viewer.rotateCamera(-1, 0);
+            viewerDiv.focus();
+        });
+        document.getElementById('lookRight').addEventListener('click', function(event) {
+            itowns.viewer.rotateCamera(1, 0);
+            viewerDiv.focus();
+        });
+
+        </script>
+    </body>
+</html>
