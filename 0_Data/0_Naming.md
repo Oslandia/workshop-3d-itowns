@@ -11,8 +11,7 @@ With XX being your assigned number.
 
 # Access to the server
 
-Server: 3d.oslandia.com
-User: foss4g
-Password: foss4G2016!
-
-Name of the database: 'gml'
+* Server: 3d.oslandia.com
+* User: foss4g
+* Password: foss4G2016!
+* Name of the database: 'gml'
