@@ -36,6 +36,6 @@ TODO : décrire la méthode de navigation
 
 ## Point to your own database table
 
-* Open the www/index.html file and look for a variable named `buildingLayerName`.
+* Open the `www/index.html` file and look for a JavaScript variable named `buildingLayerName`.
 * The building server has been configured so that a table **wsXX_montreal** can be used by the name **wsXX**. Set the correct name to this variable so that it can point to your own database table.
 
