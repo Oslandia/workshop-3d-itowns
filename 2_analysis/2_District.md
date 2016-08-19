@@ -1,6 +1,9 @@
 We will now make the link between buildings and the district they belong to.
 The goal is then to be able to use that information in iTowns2 to classify each building by their district.
 
+In the database
+---------------
+
 ```sql
 ALTER TABLE wsXX_montreal ADD COLUMN district_num integer;
 ALTER TABLE wsXX_montreal ADD COLUMN district_name varchar;
@@ -15,9 +18,15 @@ t AS (
 UPDATE wsXX_montreal SET district_num = t.num, district_name = t.nom FROM t WHERE wsXX_montreal.gid = t.gid;
 ```
 
-iTowns (index.html):
-* Fetch attributes district_num, district_name
-* Color function:
+In iTowns
+---------
+
+Now you need to modify the javascript code found in index.html so that additional columns are extracted from the building server (not only the geometries). These column values can then be used in a function called to set a color on each geometry feature.
+
+* Look for the variable `attributes`. It should be an array of string. We need to fetch two new attributes coming from the data table: "district_num" and "district_name"
+* Look for the variable `colorFunction`. This function will be called for each vector feature with a dictionnary of attributes as its first paramter. A vector of 3 dimension is expected in return. It gives the 3 R,G,B components of the color (between 0.0 and 1.0):
+
+```Javascript
 function(attributes) {
     if(attributes.district_num === 20) {
         return new THREE.Vector3(1, 1, 0);
@@ -28,3 +37,4 @@ function(attributes) {
     }
     return new THREE.Vector3(1, 1, 1);
 }
+```
