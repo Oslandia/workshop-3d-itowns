@@ -15,13 +15,13 @@ Feel free to contact us for more information, training sessions or development o
 
 The workshop is based on the following technologies:
 
-* ? QGIS: the famous desktop GIS
 * PostGIS: the well known database, with 3D additions
 * MapServer Mapcache: a map caching server
 * iTowns2: a 3D web client to display 3D data in a browser, based on WebGL and Three.js and PoTree
 
-The workshop is composed of two modules:
+The workshop is composed of three modules:
 
+* Data: importing geospatial data from different sources into a postGIS database
 * Web client: an introduction to the iTowns web application
 * Analysis: 3D analysis using postGIS and visualization of the result with iTowns
 
