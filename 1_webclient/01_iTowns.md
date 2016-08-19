@@ -24,6 +24,6 @@ Your own 3D scene
 
 On the server, in the home directory of the user 'foss4g', a subdirectory named 'www' can be found. It contains one subdirectory for each user of the workshop.
 
-* Creates a file /home/foss4g/www/wsXX/index.html with a simple text content ("Hello !") and checks that it is displayed correctly when you go with your browser to 3d.oslandia.com/foss4g/wsXX/
+* Create a file /home/foss4g/www/wsXX/index.html with a simple text content ("Hello !") and check that it is displayed correctly when you go with your browser to http://3d.oslandia.com/foss4g/wsXX/
 
 * TODO explain how to copy the example
