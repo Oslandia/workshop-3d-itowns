@@ -8,8 +8,6 @@ The districts are represented geometrically by a 2D polygon.
 
 The ogr2ogr program allows us to load all of the data contained in the GeoJSON file in our database.
 
-Choose a name for your table. We will refer to it as "district table"
-
 `ogr2ogr -f "PostgreSQL" PG:"dbname=gml user=postgres" "/home/oslandia/data/montreal/geojson/district.json" -nln <district table> -append`
 
 We can check the result:

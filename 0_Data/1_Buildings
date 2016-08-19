@@ -8,8 +8,6 @@ Here are the instructions for extracting the geometries from the files and impor
 
 We need to create a new table for the buildings.
 
-Choose a name for the table, we will refer to it as "building table" in the rest of the workshop.
-
 `psql gml -c "CREATE TABLE <building table>(gid SERIAL PRIMARY KEY, geom GEOMETRY('POLYHEDRALSURFACEZ', 2950))"`
 
 ## Importing the data
