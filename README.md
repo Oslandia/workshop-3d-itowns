@@ -1,4 +1,4 @@
-# Workshop 3D foss4g 2015
+# Workshop 3D Foss4G 2016 @ Bonn
 
 ## About
 
@@ -34,7 +34,5 @@ This workshop requires a recent web browser with WebGL support and a good graphi
 You will also need an SSH client to access the remote database.
 
 ## Troubleshooting
-
-If you have trouble with the Docker container, see the previous paragraph, and look at the documentation and issues on GitHub.
 
 You can report issues with this workshop on this GitHub's repository issue tracker.
