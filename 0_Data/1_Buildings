@@ -26,7 +26,7 @@ You can safely ignore the warnings.
 
 This process can be pretty long. To save some time, the other SQL scripts have already been created.
 
-`sh /home/oslandia/data/scripts/load_citygml.sql <building table>`
+`sh /home/oslandia/data/montreal/scripts/load_citygml.sh <building table>`
 
 You can check that the data has been correctly loaded:
 
