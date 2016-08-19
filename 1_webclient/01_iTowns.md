@@ -1,3 +1,4 @@
+
 # iTowns
 
 ## Introduction
@@ -20,9 +21,7 @@ To prepare the database, launch the following script:
 
 ## Client configuration
 
-Open www/index.html with a text editor.
-
-Find the "buildingLayerName" variable, and replace "montreal" by wsXX (XX being your assigned number).
+Open the www/index.html file and look for a variable named **buildingLayerName**. The building server has been configured so that a table **wsXX_montreal** can be used by the name **wsXX**. Set the correct name to this variable so that it can point to your own database table.
 
 ## Running iTowns2
 
