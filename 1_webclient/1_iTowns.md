@@ -5,7 +5,7 @@
 
 iTowns2 is a JavaScript framework for the visualization of 3D geospatial data.
 
-We will use it to view terrain, 3D buildings and point clouds.
+It is able to view terrain, 3D buildings and point clouds.
 
 ## Testing iTowns2
 
@@ -13,11 +13,15 @@ A running example is available at http://3d.oslandia.com.
 
 The top left panel can be used to show or hide the different layers of the demo.
 
-Holding the "s" key and clicking on a building selects it and displays its attributes.
+The navigation uses solely the keyboard:
+* Arrow keys to move the camera on the horizontal plan
+* R/F to move up and down
+* W/A/X/D to rotate the camera
+* Left shift to move faster
 
-TODO : décrire la méthode de navigation
+Holding the S key and clicking on a building selects it and displays its attributes.
 
-## Your own 3d scene
+## Your own 3D scene
 
 ### Server configuration
 
