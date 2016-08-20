@@ -25,15 +25,38 @@ Holding the S key and clicking on a building selects it and displays its attribu
 
 ### Server configuration
 
-We have a short preprocessing step that organizes the data for faster viewing.
+We have a short preprocessing step that organizes the data for faster viewing. It classifies the buildings into a quadtree, allowing their progressive transmission.
 
-The server has been pre-configured, you can check the configuration file: /home/oslandia/building-server/building_server/settings.py.
+First, you have to create a configuration file for your building layer. The configuration files are located in /home/oslandia/building-server/building_server/cities. There already is a configuration file for the demo at http://3d.oslandia.com. Copy it, and give it a unique name: `cp /home/oslandia/building-server/building_server/cities/montreal_default.py /home/oslandia/building-server/building_server/cities/<My_config_file>.py`
 
-Most notably, you will find the database name, the table name, and the extent of the scene.
+This is the content of the file:
 
-To prepare the database, launch the following script:
+```python
+import cities
 
-`python /home/oslandia/building-server/building_server/processDB.py wsXX` (XX being your assigned number)
+cities.CITIES["TODO_ID"] = {
+    "tablename": "TODO_TABLE",
+    "extent": [[297250,5038250], [303750,5044750]],
+    "maxtilesize": 2000,
+    "srs":"EPSG:2950",
+    "featurespertile":20
+}
+```
+
+* TODO_ID: replace this by the identifier by which you wish your building layer to be referred to
+* TODO_TABLE: replace this by the name of the table that contains the building data
+* extent: the extent covered by the buildings
+* maxtilesize: the size of the root tiles of the quadtree
+* srs: the geometries' spatial reference system
+* featurespertile: the maximum number of buildings per tile of the quadtree
+
+You only need to modify TODO_ID and TODO_TABLE.
+
+To prepare the database, launch the following script. Don't forget to replace TODO_ID.
+
+`python /home/oslandia/building-server/building_server/processDB.py TODO_ID`
+
+The configuration of all the cities can be retrieved at http://3d.oslandia.com/building?query=getCities. You can test if your configuration has been taken into account by going on this page. This can take up to one minute to update.
 
 ## Client configuration
 
