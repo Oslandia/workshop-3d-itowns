@@ -1,0 +1,86 @@
+# Point Cloud
+
+A point cloud is already stored in the **patchs_400** database, using the PGPointCloud extension.
+
+You can view it either in [iTowns](http://3d.oslandia.com/) or in [PotreeViewer](http://3d.oslandia.com/potree/examples/lopocs.html).
+
+You can access the database with `psql pc_montreal`.
+
+## PGPointCloud basics
+
+PGPointCloud stores does not store points directly in the database. Instead, to relieve postgres from the load caused by the massive amount of points, it stores patches of points.
+
+Count the number of patches.
+```
+SELECT count(*) from pa;
+```
+
+Each patch is made of several hundred of neighboring points.
+
+`SELECT pc_numpoints(pa) from pa LIMIT 1;`
+
+The points are stored compressed.
+
+Each point has a number of dimension, such as 3D coordinates (x,y,z), classification or color.
+
+Using pc_summary, we can have the definition of these dimensions:
+
+`SELECT pc_summary(pc_explode(pa)) FROM pa WHERE id = 1 LIMIT 1;`
+
+We can retrieve the first point of the patch with id = 1 by exploding the patch:
+
+`SELECT pc_astext(pc_explode(pa)) FROM pa WHERE id = 1 LIMIT 1;`
+
+This returns a JSON object, containing two attributes:
+* **pcid**, which is a reference to the type of formating of the point
+* **pt**, the value for each of the dimensions of the point
+
+## Analysis
+
+In this section, we will compute the height of a building.
+
+Start by selecting a roof in iTowns in a place where the point cloud is defined.
+
+In this example, we chose a roof whose gid is 60449.
+
+The first step consists in selecting all the patches that intersect our roof.
+
+We start by selecting the polygons of the roof.
+
+```
+SELECT ST_GeometryN(geom, n) AS geom
+FROM montreal
+CROSS JOIN generate_series(1,ST_NumGeometries(geom)) n
+WHERE gid = 60449
+```
+
+This query breaks down a polyhedral surface in all its polygons.
+* ST_GeometryN retrieves the nth polygon
+* ST_NumGeometries retrieves the number of geometries of the polyhedral surface
+* generate_series creates a list of integer from 1 to ST_NumGeometries. By cross-joining with the building database, we obtain a tuple for each polygon.
+
+Once we have all these polygons, we can select the relevant patches:
+
+```
+WITH roofs as (
+    SELECT ST_GeometryN(geom, n) AS geom
+    FROM montreal
+    CROSS JOIN generate_series(1,ST_NumGeometries(geom)) n
+    WHERE gid = 60449)
+SELECT count(DISTINCT id)
+FROM pa, roofs
+WHERE pc_intersects(pa,geom);
+```
+
+And get the maximum height:
+
+```
+WITH roofs as (
+    SELECT ST_GeometryN(geom, n) AS geom
+    FROM montreal
+    CROSS JOIN generate_series(1,ST_NumGeometries(geom)) n
+    WHERE gid = 60449)
+SELECT max(pc_patchmax(pa, 'z'))
+FROM pa, roofs
+WHERE pc_intersects(pa,geom);
+```
