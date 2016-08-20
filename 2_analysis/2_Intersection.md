@@ -9,8 +9,8 @@ First, we will find all the buildings that are inside and on the border of a 500
 Let's start by adding a new column to our database:
 
 ```sql
-psql gml
-ALTER TABLE wsXX_montreal ADD COLUMN in_radius smallint DEFAULT 0;
+psql pc_montreal
+ALTER TABLE yourschema.montreal ADD COLUMN in_radius smallint DEFAULT 0;
 ```
 
 The center of our sphere is the point of coordinate (300723,5041750,10). The *ST_3DDistance* function computes the minimum distance between two geometrie. *ST_3DMaxDistance* computes the maximum distance.
@@ -19,21 +19,21 @@ The center of our sphere is the point of coordinate (300723,5041750,10). The *ST
 * The second query selects all the geometries from the previous query whose maximal distance to the center of the sphere is superior to 500 meters: these are the geometries which are both in and out of the sphere.
 
 ```sql
-UPDATE wsXX_montreal
+UPDATE yourschema.montreal
 SET in_radius = 1
 WHERE gid
 IN (
     SELECT gid
-    FROM wsXX_montreal
+    FROM yourschema.montreal
     WHERE ST_3DDistance(geom, ST_SetSRID(ST_MakePoint(300723,5041750,10),2950)) <= 500
 );
 
-UPDATE wsXX_montreal
+UPDATE yourschema.montreal
 SET in_radius = 2
 WHERE gid
 IN (
     SELECT gid
-    FROM wsXX_montreal
+    FROM yourschema.montreal
     WHERE in_radius = 1 AND ST_3DMaxDistance(geom, ST_SetSRID(ST_MakePoint(300723,5041750,10),2950)) >= 500
 );
 ```

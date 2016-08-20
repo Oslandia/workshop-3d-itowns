@@ -7,17 +7,17 @@ In the database
 ---------------
 
 ```sql
-ALTER TABLE wsXX_montreal ADD COLUMN district_num integer;
-ALTER TABLE wsXX_montreal ADD COLUMN district_name varchar;
+ALTER TABLE yourschema.montreal ADD COLUMN district_num integer;
+ALTER TABLE yourschema.montreal ADD COLUMN district_name varchar;
 
 WITH
 d AS (
-  SELECT num, nom, geom FROM wsXX_districts WHERE geom && ST_MakeEnvelope(298250, 5039250, 302750, 5043750)
+  SELECT num, nom, geom FROM yourschema.districts WHERE geom && ST_MakeEnvelope(298250, 5039250, 302750, 5043750)
 ),
 t AS (
-  SELECT d.num, d.nom, wsXX_montreal.gid from d, wsXX_montreal WHERE ST_Force3D(d.geom) && ST_CENTROID(Box2D(wsXX_montreal.geom))
+  SELECT d.num, d.nom, yourschema.montreal.gid from d, yourschema.montreal WHERE ST_Force3D(d.geom) && ST_CENTROID(Box2D(yourschema.montreal.geom))
 )
-UPDATE wsXX_montreal SET district_num = t.num, district_name = t.nom FROM t WHERE wsXX_montreal.gid = t.gid;
+UPDATE yourschema.montreal SET district_num = t.num, district_name = t.nom FROM t WHERE yourschema.montreal.gid = t.gid;
 ```
 
 In iTowns
