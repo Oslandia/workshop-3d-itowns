@@ -24,7 +24,7 @@ Each point has a number of dimension, such as 3D coordinates (x,y,z), classifica
 
 Using pc_summary, we can have the definition of these dimensions as well as additional informations concerning the patch (min, max, average values for each dimension, total number of points...):
 
-`SELECT pc_summary(pc_explode(pa)) FROM pa WHERE id = 1 LIMIT 1;`
+`SELECT pc_summary(pa) FROM pa WHERE id = 1 LIMIT 1;`
 
 We can retrieve the first point of the patch with id = 1 by exploding the patch:
 
@@ -134,7 +134,7 @@ We start by selecting the polygons of the roof.
 SELECT ST_GeometryN(geom, n) AS geom
 FROM montreal
 CROSS JOIN generate_series(1,ST_NumGeometries(geom)) n
-WHERE gid = 60449
+WHERE gid = 60449;
 ```
 
 This query breaks down a polyhedral surface in all its polygons.

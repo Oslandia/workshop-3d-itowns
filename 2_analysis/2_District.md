@@ -10,7 +10,7 @@ ALTER TABLE wsXX_montreal ADD COLUMN district_name varchar;
 
 WITH
 d AS (
-  SELECT num, nom, geom FROM wsXX_district WHERE geom && ST_MakeEnvelope(298250, 5039250, 302750, 5043750)
+  SELECT num, nom, geom FROM wsXX_districts WHERE geom && ST_MakeEnvelope(298250, 5039250, 302750, 5043750)
 ),
 t AS (
   SELECT d.num, d.nom, wsXX_montreal.gid from d, wsXX_montreal WHERE ST_Force3D(d.geom) && ST_CENTROID(Box2D(wsXX_montreal.geom))
@@ -21,10 +21,10 @@ UPDATE wsXX_montreal SET district_num = t.num, district_name = t.nom FROM t WHER
 In iTowns
 ---------
 
-Now you need to modify the javascript code found in index.html so that additional columns are extracted from the building server (not only the geometries). These column values can then be used in a function called to set a color on each geometry feature.
+Now you need to modify the javascript code found in index.html so that the building attributes stored in the newly created columns are extracted from the building server with the geometries. The attributes values can then be used in a function that sets a color to each feature.
 
-* Look for the variable `attributes`. It should be an array of string. We need to fetch two new attributes coming from the data table: "district_num" and "district_name"
-* Look for the variable `colorFunction`. This function will be called for each vector feature with a dictionnary of attributes as its first paramter. A vector of 3 dimension is expected in return. It gives the 3 R,G,B components of the color (between 0.0 and 1.0):
+* Look for the variable `attributes`. It should be an array of string. We need to fetch two new attributes coming from the data table: "district_num" and "district_name" `var attributes = ["district_num", "district_name"];`
+* Look for the variable `colorFunction`. This function will be called for each vector feature with a dictionary of attributes as its first parameter. A vector of 3 dimension is expected in return. It gives the 3 R,G,B components of the color (between 0.0 and 1.0):
 
 ```Javascript
 function(attributes) {
@@ -38,3 +38,5 @@ function(attributes) {
     return new THREE.Vector3(1, 1, 1);
 }
 ```
+
+Open index.html in a web browser to see the result. Selecting a building (s + click) will display its gid, district number and district name.

@@ -1,7 +1,7 @@
-ALTER TABLE montreal ADD COLUMN in_radius smallint DEFAULT 0;
+ALTER TABLE wsXX_montreal ADD COLUMN in_radius smallint DEFAULT 0;
 
-UPDATE montreal SET in_radius = 1 WHERE gid IN (SELECT gid FROM montreal WHERE ST_3DDistance(geom, ST_SetSRID(ST_MakePoint(300723,5041750,10),2950)) <= 500);
-UPDATE montreal SET in_radius = 2 WHERE gid IN (SELECT gid FROM montreal WHERE in_radius = 1 AND ST_3DMaxDistance(geom, ST_SetSRID(ST_MakePoint(300723,5041750,10),2950)) >= 500);
+UPDATE wsXX_montreal SET in_radius = 1 WHERE gid IN (SELECT gid FROM wsXX_montreal WHERE ST_3DDistance(geom, ST_SetSRID(ST_MakePoint(300723,5041750,10),2950)) <= 500);
+UPDATE wsXX_montreal SET in_radius = 2 WHERE gid IN (SELECT gid FROM wsXX_montreal WHERE in_radius = 1 AND ST_3DMaxDistance(geom, ST_SetSRID(ST_MakePoint(300723,5041750,10),2950)) >= 500);
 
 iTowns (index.html):
 * Fetch attributes in_radius
