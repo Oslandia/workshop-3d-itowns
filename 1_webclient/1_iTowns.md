@@ -23,6 +23,17 @@ Holding the S key and clicking on a building selects it and displays its attribu
 
 ## Your own 3D scene
 
+### Example download
+
+* Download the content of the git repository hosting this workshop here https://github.com/Oslandia/workshop-3d-itowns/archive/master.zip (or clone the repository with git if your prefer).
+* Extract the files on your computer and open `www/index.html` with your browser. You should see the example 3D scene.
+
+The web page uses the same database as http://3d.oslandia.com.
+
+* If you open the `www/index.html` file, you will see it contains JavaScript code used to initialize the 3D scene. And in particular, the building layer has a symbolic name 'monteal' by default. It refers to a **building server** that serves vectorial data from a 3D postgis database to an optimized format suited for fast display.
+
+You will now see how to tell iTowns to use your own building layer.
+
 ### Server configuration
 
 We have a short preprocessing step that organizes the data for faster viewing. It classifies the buildings into a quadtree, allowing their progressive transmission.
@@ -58,13 +69,8 @@ To prepare the database, launch the following script. Don't forget to replace TO
 
 The configuration of all the cities can be retrieved at http://3d.oslandia.com/building?query=getCities. You can test if your configuration has been taken into account by going on this page. This can take up to one minute to update.
 
-## Client configuration
-
-* Download the content of the git repository hosting this workshop here https://github.com/Oslandia/workshop-3d-itowns/archive/master.zip (or clone the repository with git if your prefer).
-* Extract the files on your computer and open `www/index.html` with your browser. You should see the example 3D scene.
-
-The web page uses the same database as http://3d.oslandia.com. Point to your own database table:
+### Point to your table
 
 * Open the `www/index.html` file and look for a JavaScript variable named `buildingLayerName`.
-* The building server has been configured so that a table **wsXX_montreal** can be used by the name **wsXX**. Set the correct name to this variable so that it can point to your own database table.
+* Set the correct name (TODO_ID) to this variable so that it can point to your own database table (TODO_TABLE).
 * Test by opening `www/index.html` in your web browser. If buildings start to appear, the server was correctly configured.
