@@ -123,10 +123,12 @@ This time, the layer uses the WMS protocol. Notable new parameters:
 
 ### Buildings
 
+In the `www/index.html` file, you will see the building layer has a symbolic name 'montreal' by default. It refers to a **building server** that serves vectorial data from a 3D postgis database to an optimized format suited for fast display.
+
 The web page uses the same database as http://3d.oslandia.com. Point to your own database table:
 
 * Open the `www/index.html` file and look for a JavaScript variable named `buildingLayerName`.
-* The building server has been configured so that a table **wsXX_montreal** can be used by the name **wsXX**. Set the correct name to this variable so that it can point to your own database table.
+* Set the correct name (TODO_ID) to this variable so that it can point to your own database table (TODO_TABLE).
 * Test by opening `www/index.html` in your web browser. If buildings start to appear, the server was correctly configured.
 
 ### Point cloud

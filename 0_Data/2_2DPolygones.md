@@ -29,6 +29,6 @@ The district data is in the geographic coordinate system. We will project it in 
 
 ```
 psql pc_montreal
-SELECT AddGeometryColumn('yourschema.districts', 'geom', 2950, 'MULTIPOLYGON', 2);
+SELECT AddGeometryColumn('yourschema', 'districts', 'geom', 2950, 'MULTIPOLYGON', 2);
 UPDATE yourschema.districts SET geom = ST_TRANSFORM(wkb_geometry, 2950);
 ```
