@@ -127,7 +127,8 @@ itowns.viewer.addImageryLayer({
 
 This time, the layer uses the WMS protocol. Notable new parameters:
 * heightMapWidth: the resolution of the images that will be downloaded
-* name: the name of the WMS ayer
+* name: the name of the WMS layer
+* updateStrategy is an optimization attribute that defines a strategy to choose which image resolution should be loaded first. Some strategies favor loading only the highest resolution images to save bandwidth, while others try to achieve a smoother loading by loading intermediary, lower resolution images
 
 ### Buildings
 
