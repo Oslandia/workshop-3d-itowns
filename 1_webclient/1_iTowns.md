@@ -13,13 +13,10 @@ A running example is available at http://3d.oslandia.com.
 
 The top left panel can be used to show or hide the different layers of the demo.
 
-The navigation uses solely the keyboard:
-* Arrow keys to move the camera on the horizontal plan
-* R/F to move up and down
-* W/A/X/D to rotate the camera
-* Left shift to move faster
-
-Holding the S key and clicking on a building selects it and displays its attributes.
+Use the mouse to navigate and interact with the scene:
+* Holding the left mouse button allows to move the camera on the horizontal plane
+* Holding Ctrl and the left mouse button rotates the camera
+* Holding the S key and clicking on a building selects it and displays its attributes.
 
 ## Your own 3D scene
 
