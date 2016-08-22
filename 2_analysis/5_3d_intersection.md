@@ -52,6 +52,8 @@ Then run:
 
 `python /home/oslandia/building-server/building_server/processDB.py yourlayer`
 
+Modify index.html and set *buildingLayerName* to "yourlayer", you can now visualize the simplified dataset.
+
 ## Flood (rough) simulation
 
 Get parts of the buildings above a flood of 30 meters.
@@ -60,15 +62,15 @@ Get parts of the buildings above a flood of 30 meters.
 create table yourschema.flood as
 with
 -- the whole 'plane'
-e as (select st_extent(geom) as geom from mercier.approx),
+e as (select st_extent(geom) as geom from yourschema.approx),
 -- a big box at 30 meters above the ground
 ee as (select st_translate(st_extrude(e.geom, 0, 0, 300), 0, 0, 30) as geom from e)
 select gid,
        st_3dintersection(a.geom, ee.geom) as geom
-from ee, mercier.approx as a
+from ee, yourschema.approx as a
 -- start with a small subset (50m around a point)
 -- don't go further than 200 m (too slow)
-where geom2d && st_makeenvelope(299765-50,5040838-50,299765+50,5040838+50)
+where geom2d && st_makeenvelope(299765-50,5040838-50,299765+50,5040838+50);
 ```
 
 Exercise: there is also a function named `st_3ddifference(geom1, geom2)`, use it instead of `st_3dintersection`
