@@ -58,6 +58,17 @@ To prepare the database, launch the following script. Don't forget to replace TO
 
 The configuration of all the cities can be retrieved at http://3d.oslandia.com/building?query=getCities. You can test if your configuration has been taken into account by going on this page. This can take up to one minute to update.
 
+As for the imagery, we use MapServer. It has already been configured: it works as a proxy between the client and the data source http://geoindex.uqam.ca. We can access the WMS server of geoindex while still pointing on http://3d.oslandia.com. This way, we centralize the request on the http://3d.oslandia.com domain.
+
+Here is the exact configuration, taken from the nginx web server configuration file /etc/nginx/sites-enabled/3d.oslandia.com
+
+```
+location /mapserv {
+        proxy_pass http://geoindex.uqam.ca;
+        add_header Access-Control-Allow-Origin *;
+}
+```
+
 ## Client configuration
 
 
