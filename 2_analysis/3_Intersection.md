@@ -54,3 +54,20 @@ function(attributes) {
     return new THREE.Vector3(1, 1, 1);
 };
 ```
+
+We will also need to visualize the sphere to check if the result is correct. Luckily, iTowns is based on the ThreeJS 3D library, so it is really easy to add 3D objects to the scene.
+
+```js
+var geometry = new THREE.SphereGeometry( 500,20,20 );
+geometry.translate(300723,5041750,10);
+var material = new THREE.MeshBasicMaterial( {color: 0xffff00, wireframe: true} );
+var sphere = new THREE.Mesh( geometry, material );
+itowns.viewer.addObject(sphere);
+```
+
+* First we create a sphere geometry with a radius of 500 meters, composed of 20 x 20 segments (the resolution of the sphere)
+* Then we translate it to the desired position in the world
+* We create its material (which defines how the geometry will be rendered), and set the wireframe attribute to true to be able to see inside the sphere
+* Finally, we create the mesh from the geometry and the material and add it to the scene
+
+You can now visually check the correctness of the query.
