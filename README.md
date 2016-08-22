@@ -16,7 +16,7 @@ Feel free to contact us for more information, training sessions or development o
 The workshop is based on the following technologies:
 
 * PostGIS: the well known database, with 3D and point cloud additions
-* MapServer Mapcache: a map caching server
+* MapServer: a Web Map Service server
 * iTowns2: a 3D web client to display 3D data in a browser, based on WebGL and Three.js and PoTree
 
 The workshop is composed of three modules:

@@ -60,11 +60,79 @@ The configuration of all the cities can be retrieved at http://3d.oslandia.com/b
 
 ## Client configuration
 
-* Download the content of the git repository hosting this workshop here https://github.com/Oslandia/workshop-3d-itowns/archive/master.zip (or clone the repository with git if your prefer).
-* Extract the files on your computer and open `www/index.html` with your browser. You should see the example 3D scene.
+
+Download the content of the git repository hosting this workshop here https://github.com/Oslandia/workshop-3d-itowns/archive/master.zip (or clone the repository with git if your prefer).
+
+Extract the files on your computer and open `www/index.html` with a text editor.
+
+### Terrain
+
+The terrain layer is composed of two components: the elevation and the imagery.
+
+In index.html, add the elevation layer after the definition of the scene:
+
+```javascript
+itowns.viewer.addElevationLayer({
+    url       : "http://3d.oslandia.com/dem.png",
+    protocol  : 'single_image',
+    id        : 'elevation',
+    projection : "EPSG:2950",
+    bbox      : [266040.26, 4984521.41, 343559.74, 5095744.39],
+    updateStrategy: {
+        type: 0
+    },
+    options: {
+        minmaxElevation: [0, 255],
+        mimetype  : "image/png"
+    }
+});
+```
+
+Notable parameters:
+* protocol single_image indicates that the MNT is described by a single image
+* url thus indicates this image's address
+* bbox is the bounding box of the image in the projection srs
+* option.minmaxElevation is the image elevation scale
+
+Now, add the imagery layer:
+
+```javascript
+itowns.viewer.addImageryLayer({
+    url       : "http://3d.oslandia.com/mapserv?map=cmm_2013",
+    protocol  : 'wms',
+    version   : '1.3.0',
+    id        : 'Imagery',
+    name      : 'cmm_2013',
+    style      : "",
+    projection : "EPSG:2950",
+    bbox      : [266040.26, 4984521.41, 343559.74, 5095744.39],
+    heightMapWidth : 256,
+    updateStrategy: {
+        type: 3
+    },
+    options: {
+        mimetype  : "image/jpeg",
+        tileMatrixSet: 'WGS84G' // NE DEVRAIT PAS ETRE NECESSAIRE
+    }
+});
+```
+
+This time, the layer uses the WMS protocol. Notable new parameters:
+* heightMapWidth: the resolution of the images that will be downloaded
+* name: the name of the WMS ayer
+
+### Buildings
 
 The web page uses the same database as http://3d.oslandia.com. Point to your own database table:
 
 * Open the `www/index.html` file and look for a JavaScript variable named `buildingLayerName`.
 * The building server has been configured so that a table **wsXX_montreal** can be used by the name **wsXX**. Set the correct name to this variable so that it can point to your own database table.
 * Test by opening `www/index.html` in your web browser. If buildings start to appear, the server was correctly configured.
+
+### Point cloud
+
+Add the point cloud by adding this line after the scene definition:
+
+```javascript
+itowns.viewer.addPointCloud("greyhound://3d.oslandia.com/lopocs-itowns/greyhound/");
+```

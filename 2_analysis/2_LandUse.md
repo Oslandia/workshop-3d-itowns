@@ -18,8 +18,11 @@ WITH
 d AS (
   SELECT categorie, geom FROM yourschema.landuse WHERE geom && ST_MakeEnvelope(298250, 5039250, 302750, 5043750)
 ),
+b AS (
+    SELECT ST_SetSRID(ST_CENTROID(Box2D(yourschema.montreal.geom)),2950) AS geom FROM yourschema.montreal;
+),
 t AS (
-    SELECT d.categorie, yourschema.montreal.gid FROM d, yourschema.montreal WHERE ST_Intersects(d.geom, ST_SetSRID(ST_CENTROID(Box2D(yourschema.montreal.geom)),2950))
+    SELECT d.categorie, yourschema.montreal.gid FROM d, b WHERE ST_Intersects(d.geom, b.geom)
 )
 UPDATE yourschema.montreal SET landuse = t.categorie FROM t WHERE yourschema.montreal.gid = t.gid;
 ```
