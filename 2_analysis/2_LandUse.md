@@ -11,15 +11,15 @@ First, create a new column in the building table to record the function fo the b
 ALTER TABLE yourschema.montreal ADD COLUMN landuse varchar;
 ```
 
-Now, like we did with the districts, intersect the buildings with the various land use polygons:
+Now, like we did with the districts, intersect the buildings with the various land use polygons. Since the query takes quite a lot of time, we restrict the area on which the process is done.
 
 ```sql
 WITH
 d AS (
-  SELECT categorie, geom FROM yourschema.landuse WHERE geom && ST_MakeEnvelope(298250, 5039250, 302750, 5043750)
+  SELECT categorie, geom FROM yourschema.landuse WHERE geom && ST_MakeEnvelope(298250, 5039250, 300000, 5041250)
 ),
 b AS (
-    SELECT ST_SetSRID(ST_CENTROID(Box2D(yourschema.montreal.geom)),2950) AS geom, gid FROM yourschema.montreal
+    SELECT ST_SetSRID(ST_CENTROID(Box2D(yourschema.montreal.geom)),2950) AS geom, gid FROM yourschema.montreal WHERE geom && ST_MakeEnvelope(298250, 5039250, 300000, 5041250)
 ),
 t AS (
     SELECT d.categorie, b.gid FROM d, b WHERE ST_Intersects(d.geom, b.geom)
