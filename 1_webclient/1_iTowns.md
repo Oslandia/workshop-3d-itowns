@@ -123,8 +123,7 @@ itowns.viewer.addImageryLayer({
         type: 3
     },
     options: {
-        mimetype  : "image/jpeg",
-        tileMatrixSet: 'WGS84G' // NE DEVRAIT PAS ETRE NECESSAIRE
+        mimetype  : "image/jpeg"
     }
 });
 ```
