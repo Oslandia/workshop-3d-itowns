@@ -4,7 +4,7 @@ A point cloud is already stored in the **patchs_400** database, using the PGPoin
 
 You can view it either in [iTowns](http://3d.oslandia.com/) or in [PotreeViewer](http://3d.oslandia.com/potree/examples/lopocs.html).
 
-You can access the database with `psql pc_montreal`.
+Access the database with `psql pc_montreal`.
 
 ## PGPointCloud basics
 
@@ -132,7 +132,7 @@ We start by selecting the polygons of the roof.
 
 ```sql
 SELECT ST_GeometryN(geom, n) AS geom
-FROM buildings.montreal
+FROM yourschema.montreal
 CROSS JOIN generate_series(1,ST_NumGeometries(geom)) n
 WHERE gid = 60449;
 ```
@@ -147,7 +147,7 @@ Once we have all these polygons, we can select the relevant patches:
 ```sql
 WITH roofs as (
     SELECT ST_GeometryN(geom, n) AS geom
-    FROM buildings.montreal
+    FROM yourschema.montreal
     CROSS JOIN generate_series(1,ST_NumGeometries(geom)) n
     WHERE gid = 60449)
 SELECT count(DISTINCT id)
@@ -160,7 +160,7 @@ And get the maximum height:
 ```sql
 WITH roofs as (
     SELECT ST_GeometryN(geom, n) AS geom
-    FROM buildings.montreal
+    FROM yourschema.montreal
     CROSS JOIN generate_series(1,ST_NumGeometries(geom)) n
     WHERE gid = 60449)
 SELECT max(pc_patchmax(pa, 'z'))

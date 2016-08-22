@@ -69,13 +69,14 @@ Extract the files on your computer and open `www/index.html` with a text editor.
 
 The terrain layer is composed of two components: the elevation and the imagery.
 
-In index.html, add the elevation layer after the definition of the scene:
+In index.html, add the elevation layer after the definition of the scene (search the "Elevation here" comment):
 
 ```javascript
 itowns.viewer.addElevationLayer({
     url       : "http://3d.oslandia.com/dem.png",
     protocol  : 'single_image',
     id        : 'elevation',
+    name      : 'MNT',
     projection : "EPSG:2950",
     bbox      : [266040.26, 4984521.41, 343559.74, 5095744.39],
     updateStrategy: {

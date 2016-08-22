@@ -30,9 +30,15 @@ This process can be pretty long. To save some time, the other SQL scripts have a
 
 You can check that the data has been correctly loaded:
 
-```
+```sql
 psql pc_montreal
 SELECT count(*) FROM yourschema.montreal;
 ```
 
 The result should be 80127.
+
+Index the geometry column:
+
+```sql
+CREATE INDEX ON yourschema.montreal using gist(geom);
+```

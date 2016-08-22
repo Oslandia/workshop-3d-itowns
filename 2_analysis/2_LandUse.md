@@ -19,10 +19,10 @@ d AS (
   SELECT categorie, geom FROM yourschema.landuse WHERE geom && ST_MakeEnvelope(298250, 5039250, 302750, 5043750)
 ),
 b AS (
-    SELECT ST_SetSRID(ST_CENTROID(Box2D(yourschema.montreal.geom)),2950) AS geom FROM yourschema.montreal;
+    SELECT ST_SetSRID(ST_CENTROID(Box2D(yourschema.montreal.geom)),2950) AS geom, gid FROM yourschema.montreal
 ),
 t AS (
-    SELECT d.categorie, yourschema.montreal.gid FROM d, b WHERE ST_Intersects(d.geom, b.geom)
+    SELECT d.categorie, b.gid FROM d, b WHERE ST_Intersects(d.geom, b.geom)
 )
 UPDATE yourschema.montreal SET landuse = t.categorie FROM t WHERE yourschema.montreal.gid = t.gid;
 ```
@@ -53,7 +53,7 @@ var colorFunction = function(attributes) {
 	} else if(attributes.landuse === "transport") {
 		return new THREE.Vector3(0,1,1);
 	}
-	return new THREE.vector3(1,1,1);
+	return new THREE.Vector3(1,1,1);
 };
 ```
 

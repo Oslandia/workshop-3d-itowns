@@ -15,7 +15,7 @@ The shape file can be imported using the shp2pgsql command line.
 
 We can check the result:
 
-```
+```sql
 psql pc_montreal
 SELECT num, nom FROM yourschema.districts;
 SELECT DISTINCT categorie FROM yourschema.landuse;
@@ -27,8 +27,14 @@ You should see 34 districts and 9 categories in the tables.
 
 The district data is in the geographic coordinate system. We will project it in our local srs: epsg:2950.
 
-```
+```sql
 psql pc_montreal
 SELECT AddGeometryColumn('yourschema', 'districts', 'geom', 2950, 'MULTIPOLYGON', 2);
 UPDATE yourschema.districts SET geom = ST_TRANSFORM(wkb_geometry, 2950);
+```
+
+Index the new geometry column:
+
+```sql
+CREATE INDEX ON yourschema.districts using gist(geom);
 ```

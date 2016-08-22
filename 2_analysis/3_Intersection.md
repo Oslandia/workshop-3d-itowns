@@ -40,7 +40,7 @@ IN (
 
 ## In iTowns
 
-Add the "in_radius" attributes to the list of attriutes loaded by iTowns (attributes variable).
+Add "in_radius" to the list of attributes loaded by iTowns (attributes variable).
 
 Modify the color function so the buildings in the radius of the sphere (in_radius = 1) are colored in red and the ones on the border of the sphere (in_radius = 2) are colored in yellow:
 
@@ -52,5 +52,5 @@ function(attributes) {
         return new THREE.Vector3(1, 1, 0);
     }
     return new THREE.Vector3(1, 1, 1);
-}
+};
 ```
