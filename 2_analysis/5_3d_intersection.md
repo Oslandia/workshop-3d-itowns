@@ -10,19 +10,22 @@ create table yourschema.approx (
        gid serial primary key,
        geom2d geometry('polygon', 2950),
        geom geometry('polyhedralsurfaceZ', 2950),
-       height real
+       height real,
+       groundHeight real
        );
 ```
 
 * geom2d will represent an approximation of the building's extent projected on the ground
 * we will use geom as an approximate of the 3D building
 * height will be the height of the building
+* groundHeight will be the height of the base of the building
 
 ```sql
-insert into yourschema.approx (gid, geom2d, height) select
+insert into yourschema.approx (gid, geom2d, height, groundHeight) select
        gid,
        st_convexhull(st_force2d(st_forcecollection(geom))),
-       st_zmax(geom)-st_zmin(geom)+1
+       st_zmax(geom)-st_zmin(geom)+1,
+       st_zmin(geom)
        from yourschema.montreal;
 ```
 
@@ -31,7 +34,7 @@ insert into yourschema.approx (gid, geom2d, height) select
 * st_convexhull will compute a convex envelope
 
 ```sql
-update yourschema.approx set geom = st_extrude(geom2d, 0, 0, height);
+update yourschema.approx set geom = st_translate(st_extrude(geom2d, 0, 0, height), 0, 0, groundHeight);
 ```
 
 * st_extrude will make a volume out of a 2d polygon and a vector of extrusion
@@ -52,7 +55,7 @@ Then run:
 
 `python /home/oslandia/building-server/building_server/processDB.py yourlayer`
 
-Modify index.html and set *buildingLayerName* to "yourlayer", you can now visualize the simplified dataset.
+Modify index.html and set *buildingLayerName* to "yourlayer", you can now visualize the simplified dataset. Since we are no longer interrogating the same table, remove all the elements from the attributes array.
 
 ## Flood (rough) simulation
 
