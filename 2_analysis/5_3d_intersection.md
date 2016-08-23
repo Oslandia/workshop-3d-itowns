@@ -59,18 +59,18 @@ Modify index.html and set *buildingLayerName* to "yourlayer", you can now visual
 Get parts of the buildings above a flood of 30 meters.
 
 ```sql
-create table yourschema.flood as
+create table yourscheme.flood as
 with
 -- the whole 'plane'
-e as (select st_extent(geom) as geom from yourschema.approx),
--- a big box at 30 meters above the ground
-ee as (select st_translate(st_extrude(e.geom, 0, 0, 300), 0, 0, 30) as geom from e)
+e as (select st_extent(geom) as geom from yourscheme.approx),
+-- a big box at 100 meters above the sea level
+ee as (select st_translate(st_extrude(e.geom, 0, 0, 300), 0, 0, 100) as geom from e)
 select gid,
        st_3dintersection(a.geom, ee.geom) as geom
-from ee, yourschema.approx as a
--- start with a small subset (50m around a point)
+from ee, yourscheme.approx as a
+-- start with a small subset (100m around a point)
 -- don't go further than 200 m (too slow)
-where geom2d && st_makeenvelope(299765-50,5040838-50,299765+50,5040838+50);
+where geom2d && st_makeenvelope(299565-50,5040138-50,299565+50,5040138+50);
 ```
 
-Exercise: there is also a function named `st_3ddifference(geom1, geom2)`, use it instead of `st_3dintersection`
+Exercise: visulize the result with iTwons. There is also a function named `st_3ddifference(geom1, geom2)`, use it instead of `st_3dintersection`
