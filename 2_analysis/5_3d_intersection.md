@@ -36,7 +36,7 @@ update yourschema.approx set geom = st_extrude(geom2d, 0, 0, height);
 
 * st_extrude will make a volume out of a 2d polygon and a vector of extrusion
 
-Then add this layer to your settings.py file
+Then add this layer to your python settings file (in /home/oslandia/building-server/building_server/cities/)
 
 ```python
 cities.CITIES["yourlayer"] = {
