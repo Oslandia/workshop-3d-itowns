@@ -76,4 +76,4 @@ from ee, yourscheme.approx as a
 where geom2d && st_makeenvelope(299565-50,5040138-50,299565+50,5040138+50);
 ```
 
-Exercise: visulize the result with iTwons. There is also a function named `st_3ddifference(geom1, geom2)`, use it instead of `st_3dintersection`
+Exercise: visulize the result with iTowns. There is also a function named `st_3ddifference(geom1, geom2)`, use it instead of `st_3dintersection`
