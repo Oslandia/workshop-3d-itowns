@@ -2,7 +2,7 @@
 
 * Server: 3d.oslandia.com
 * User: foss4g
-* Password: foss4G2016!
+* Password: foss4g
 
 # Accessing the database
 
