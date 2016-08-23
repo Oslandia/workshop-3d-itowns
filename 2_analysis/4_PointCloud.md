@@ -1,24 +1,24 @@
 # Point Cloud
 
-A point cloud is already stored in the **patchs_400** database, using the PGPointCloud extension.
+As seen previously, a point cloud is already stored for Montreal in the *pa*
+table within the *pc_montreal* database. You may access the database with
+`psql pc_montreal`.
 
 You can view it either in [iTowns](http://3d.oslandia.com/) or in [PotreeViewer](http://3d.oslandia.com/potree/examples/lopocs.html).
 
-Access the database with `psql pc_montreal`.
-
 ## PGPointCloud basics
 
-PGPointCloud stores does not store points directly in the database. Instead, to relieve postgres from the load caused by the massive amount of points, it stores patches of points.
+PGPointCloud does not store points directly in the database. Instead, to relieve postgres from the load caused by the massive amount of points, it stores patches of points.
 
-Count the number of patches.
+To count the number of patches within the *pa* table:
 
 `SELECT count(*) from pa;`
 
-Each patch is made of several hundred of neighboring points.
+Each patch is made of several hundred of neighboring points thanks to the chipper filter of PDAL. You can retrieve the size of a patch thanks to the *pc_numpoints* function:
 
 `SELECT pc_numpoints(pa) from pa LIMIT 1;`
 
-The points are stored compressed.
+Note that it's possible to store PGPointCloud patches with 4 kinds of compression : none, dimensional, GHT or LAZ.
 
 Each point has a number of dimension, such as 3D coordinates (x,y,z), classification or color.
 
