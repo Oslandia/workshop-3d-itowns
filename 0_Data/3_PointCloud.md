@@ -6,7 +6,7 @@ database thanks to PDAL and the pgpointcloud PostgreSQL extension.
 ## LAS files
 
 Generally speaking, point cloud data is often distributed through LAS file. LAS
-is a binary public file format wich supports a free and lossless compression
+is a binary public file format which supports a free and lossless compression
 named LAZ (LASzip).
 
 To play with these files, some very useful tools are available in libLAS or
@@ -123,14 +123,14 @@ the content:
   -------------------------------------------------------
 ```
 
-Thanks to the previous command, we now know the extent of data, the number of
-points, the available classifications levels and so on.
+With the output of the previous command, we now know the extent of data, the
+number of points, the available classification levels and so on.
 
 By downloading the full area for Montreal, we have 684 LAZ files.
 
 ## PDAL and pgpointcloud
 
-PDAL is an abstraction library wich provides some tools to manipulate point
+PDAL is an abstraction library which provides some tools to manipulate point
 cloud data. An important thing to understand in PDAL is the concept of
 *pipeline*. In fact, it's a custom processing chain described by a JSON
 file.
@@ -194,7 +194,6 @@ table at each processing step:
       "table":"pa",
       "overwrite":"false"
     }
-}
 ```
 
 Then, by running the pipeline on each LAZ file, we obtain a database with
