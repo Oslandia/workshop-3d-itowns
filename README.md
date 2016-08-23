@@ -24,7 +24,7 @@ The workshop is based on the following technologies:
 The workshop is composed of three modules:
 
 * Data: importing geospatial data from different sources into a postGIS database
-* Web client: an introduction to the iTowns web application and the PoTree viewer
+* Web client: an introduction to the iTowns web application
 * Analysis: 3D analysis using postGIS and visualization of the result with iTowns
 
 In each module, steps are marked with a number, allowing you to follow easily the whole training session.
