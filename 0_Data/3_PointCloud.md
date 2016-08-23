@@ -1,7 +1,11 @@
 # PointCloud
 
-In this section, we are going to talk about on how to load point cloud data in
+In this section, we are going to talk about how to load point cloud data in
 database thanks to PDAL and the pgpointcloud PostgreSQL extension.
+
+The size of the point cloud and the time it requires to import it all does not
+make it possible to realize the import during this session. Nevertheless, we
+will explain the steps needed to do it.
 
 ## LAS files
 
@@ -138,12 +142,12 @@ file.
 In our case, we want to fill a database using the pgpointcloud extension. Thus,
 the pipeline is the following:
 - read a LAS/LAZ file
-- use the chipper filter to store points in pgpointcloud patchs
+- use the chipper filter to store points in pgpointcloud patchs (collection of points)
 - write the pgpointcloud patchs in database
 
 With the PDAL JSON formalism, the pipeline *pipeline.json* looks like:
 
-```bash
+```js
 {
   "pipeline":[
     {
@@ -187,13 +191,13 @@ So, we have to create a specific pipeline for each LAZ file. But, the
 pgpointcloud writer coming with PDAL needs a new option to not drop the
 table at each processing step:
 
-```bash
-    {
-      "type":"writers.pgpointcloud",
-      "connection":"dbname=mydatabase user=myuser",
-      "table":"pa",
-      "overwrite":"false"
-    }
+```js
+{
+  "type":"writers.pgpointcloud",
+  "connection":"dbname=mydatabase user=myuser",
+  "table":"pa",
+  "overwrite":"false"
+}
 ```
 
 Then, by running the pipeline on each LAZ file, we obtain a database with
@@ -202,9 +206,6 @@ several millions of pgpointcloud patchs which themselves contain about
 
 The table *pa* of the *pc_montreal* database has been built in this way and
 contains 15906335 pgpointcloud patchs or by around 6 billions of points.
-
-The time required to build a database of that size is such that it's not
-realisable during this session.
 
 If you are curious on how to work with point cloud data, you can take a look
 to our dedicated workshop : https://github.com/Oslandia/workshop-pointcloud.
