@@ -55,7 +55,7 @@ function(attributes) {
 };
 ```
 
-We will also need to visualize the sphere to check if the result is correct. Luckily, iTowns is based on the ThreeJS 3D library, so it is really easy to add 3D objects to the scene.
+We will also need to visualize the sphere to check if the result is correct. Luckily, iTowns is based on the ThreeJS 3D library, so it is really easy to add 3D objects to the scene. Add these lines after the scene instanciation:
 
 ```js
 var geometry = new THREE.SphereGeometry( 500,20,20 );
