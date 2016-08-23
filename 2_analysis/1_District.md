@@ -9,7 +9,11 @@ In the database
 ```sql
 ALTER TABLE yourschema.montreal ADD COLUMN district_num integer;
 ALTER TABLE yourschema.montreal ADD COLUMN district_name varchar;
+```
 
+First, we select the districts that cover the bounds of our dataset. Then we intersect these districts with the centroids of the buildings and affect the intersecting district's name and number to the building.
+
+```sql
 WITH
 d AS (
   SELECT num, nom, geom FROM yourschema.districts WHERE geom && ST_MakeEnvelope(298250, 5039250, 302750, 5043750)
