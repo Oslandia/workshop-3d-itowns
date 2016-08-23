@@ -6,9 +6,9 @@ Here are the instructions for extracting the geometries from the files and impor
 
 ## Preparing the database
 
-We need to create a new table for the buildings.
+We need to create a new table for the buildings. In the database:
 
-`psql pc_montreal -c "CREATE TABLE yourschema.montreal(gid SERIAL PRIMARY KEY, geom GEOMETRY('POLYHEDRALSURFACEZ', 2950))"`
+`CREATE TABLE yourschema.montreal(gid SERIAL PRIMARY KEY, geom GEOMETRY('POLYHEDRALSURFACEZ', 2950));`
 
 ## Importing the data
 
