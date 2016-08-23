@@ -137,9 +137,9 @@ file.
 
 In our case, we want to fill a database using the pgpointcloud extension. Thus,
 the pipeline is the following:
-1. read a LAS/LAZ file
-2. use the chipper filter to store points in pgpointcloud patchs
-3. write the pgpointcloud patchs in database
+- read a LAS/LAZ file
+- use the chipper filter to store points in pgpointcloud patchs
+- write the pgpointcloud patchs in database
 
 With the PDAL JSON formalism, the pipeline *pipeline.json* looks like:
 
