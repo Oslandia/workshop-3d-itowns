@@ -4,7 +4,7 @@ As seen previously, a point cloud is already stored for Montreal in the *pa*
 table within the *pc_montreal* database. You may access the database with
 `psql pc_montreal`.
 
-You can view it either in [iTowns](http://3d.oslandia.com/) or in [PotreeViewer](http://3d.oslandia.com/potree/examples/lopocs.html).
+You can view it in [iTowns](http://3d.oslandia.com/).
 
 ## PGPointCloud basics
 
