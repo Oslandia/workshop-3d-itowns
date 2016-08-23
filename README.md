@@ -15,14 +15,16 @@ Feel free to contact us for more information, training sessions or development o
 
 The workshop is based on the following technologies:
 
-* PostGIS: the well known database, with 3D and point cloud additions
-* MapServer: a Web Map Service server
-* iTowns2: a 3D web client to display 3D data in a browser, based on WebGL and Three.js and PoTree
+* [PostGIS](http://postgis.net/): the well known database, with 3D and point cloud additions
+* [MapServer](http://mapserver.org/): a Web Map Service server
+* [iTowns2](https://github.com/iTowns/itowns2): a 3D web client to display 3D data in a browser, based on WebGL, Three.js and PoTree
+* Oslandia's [building server](https://github.com/Oslandia/building-server)
+* [Greyhound](https://github.com/hobu/greyhound): a point cloud server
 
 The workshop is composed of three modules:
 
 * Data: importing geospatial data from different sources into a postGIS database
-* Web client: an introduction to the iTowns web applicationandthe PoTree viewer
+* Web client: an introduction to the iTowns web application and the PoTree viewer
 * Analysis: 3D analysis using postGIS and visualization of the result with iTowns
 
 In each module, steps are marked with a number, allowing you to follow easily the whole training session.
