@@ -19,7 +19,7 @@ The workshop is based on the following technologies:
 * [MapServer](http://mapserver.org/): a Web Map Service server
 * [iTowns2](https://github.com/iTowns/itowns2): a 3D web client to display 3D data in a browser, based on WebGL, Three.js and PoTree
 * Oslandia's [building server](https://github.com/Oslandia/building-server)
-* [Greyhound](https://github.com/hobu/greyhound): a point cloud server
+* [LOPOCS](https://github.com/LI3DS/lopocs): a point cloud server
 
 The workshop is composed of three modules:
 
