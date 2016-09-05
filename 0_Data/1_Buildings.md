@@ -4,6 +4,8 @@ In this section, we will import building data contained in CityGML files into ou
 
 Here are the instructions for extracting the geometries from the files and importing them into a postGIS database.
 
+Note: in this workshop, we use a custom build of postGIS which adds the support of the export of polyhedral surfaces to GeoJSON. See this [issue](https://github.com/Oslandia/building-server/issues/1#issuecomment-244689202) for more detail.
+
 ## Preparing the database
 
 We need to create a new table for the buildings. In the database:
